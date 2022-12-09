@@ -1,5 +1,5 @@
 import logging, logging.handlers, queue, time, os, sys
-from pyliveupdate.config import LOG_SERVER_IP, LOG_SERVER_PORT
+from pyliveupdate.config import LOG_SERVER_IP, LOG_SERVER_PORT, LOGGING_FORMAT
 
 class mysocketHandler(logging.handlers.SocketHandler):
     def emit(self, record):
@@ -32,9 +32,7 @@ def get_local_logger():
     logger = logging.getLogger(__name__+'.local_logger')
     c_handler = logging.StreamHandler(stream = sys.__stderr__)
     c_handler.setLevel(logging.INFO)
-    c_format =logging.Formatter(
-#                 '%(asctime)s - %(processName)s - %(process)s - %(threadName)s -'+\
-                '%(pathname)s, %(lineno)s, %(module)s.%(funcName)s: %(message)s')
+    c_format = logging.Formatter(LOGGING_FORMAT)
     c_handler.setFormatter(c_format)
     logger.setLevel(logging.INFO)
     logger.addHandler(c_handler)

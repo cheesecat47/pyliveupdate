@@ -9,3 +9,6 @@ docs/_build
 __pycache__
 .tox
 .ipynb_checkpoints
+venv/
+.vscode/
+prod/

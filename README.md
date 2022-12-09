@@ -36,6 +36,14 @@ You can also define your own customized modifications.
 There are in general two kinds of modification: instrument and redefine.
 You can define them as following and apply with `patch('patch.py')`. Try it out with `example/patch.py`.
 
+- Customize log format
+    - Default format of `local_logger` of PyLive is `%(pathname)s, %(lineno)s, %(module)s.%(funcName)s: %(message)s`  
+    (pyliveupdate > stub > logclient > local_logger). 
+    - If you want to use your own format, add `LOGGING_FORMAT` in `~/.pyliveupdate/config.yaml`, based on [standard python logging attributes](https://docs.python.org/ko/3/library/logging.html#logrecord-attributes) . e.g.:
+        ```yaml
+        LOGGING_FORMAT: "%(asctime)s | thread: %(threadName)s | Fn: %(funcName)s | Msg: %(message)s"
+        ```
+
 #### Instrument code into existing functions
 ```
 from pyliveupdate.update import Instrument, UpdateManager

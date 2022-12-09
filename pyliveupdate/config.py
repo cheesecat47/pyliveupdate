@@ -1,4 +1,5 @@
 import os, logging, logging.handlers
+import yaml
 from pyliveupdate.util import get_ip
 
 # base directory path to put config and data
@@ -35,6 +36,9 @@ LOG_SERVER_PORT = logging.handlers.DEFAULT_TCP_LOGGING_PORT
 # log file path
 LOG_FILE = '/tmp/pyliveupdate.log'
 
+# logging config
+LOGGING_FORMAT: str = '%(pathname)s, %(lineno)s, %(module)s.%(funcName)s: %(message)s'
+
 # rpc config
 RPC_LONG_TIMEOUT=60
 MAX_WORKERS=100
@@ -44,3 +48,14 @@ MAX_CONCURRENT_RPCS=100
 # server_cert = open('server.cert','rb').read()
 # client_cert= open('client.cert','rb').read()
 # client_key = open('client.key', 'rb').read()
+
+# check config file
+# 2. under BASEDIR
+user_config_yaml_path = os.path.join(BASEDIR, 'config.yaml')
+if os.path.exists(user_config_yaml_path):
+    with open(user_config_yaml_path, 'r') as fin:
+        user_config_yaml = yaml.load(fin, Loader=yaml.FullLoader)
+        if 'LOGGING_FORMAT' in user_config_yaml:
+            LOGGING_FORMAT = user_config_yaml['LOGGING_FORMAT']
+
+# 1. from arg
